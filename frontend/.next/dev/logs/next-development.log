@@ -1,0 +1,2 @@
+{"timestamp":"00:00:01.860","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:17:37.331","source":"Server","level":"ERROR","message":"⨯ \"unhandledRejection:\" Error: ENOENT: no such file or directory, scandir 'D:\\AutoStart\\frontend\\src\\app'"}
