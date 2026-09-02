@@ -25,12 +25,12 @@ Type the idea into the frontend's IdeaForm. Hit submit.
 Point out the LiveLog component streaming each agent's progress:
 - CEO parses the idea
 - CMO researches market size + competitors (mention: real web search via Tavily)
-- CTO designs the MVP + generates a landing page (saved locally as HTML — open the file directly to show it, not deployed to a live URL)
+- CTO designs the MVP + generates and deploys a live landing page via Netlify (mention: real deployed URL, not a mockup)
 - CFO grounds financials in CMO's actual market data (not invented independently)
 - Investor agent fires real questions and pushes back with rebuttals
 
 **4. Show the results (60-90 sec)**
-- Landing page: open the generated HTML file locally (`data/landing_pages/<slug>.html`) in a browser tab to show it's real, AI-generated code — not deployed to a public URL (documented limitation, see below)
+- Landing page: click the live Netlify URL from the results view, show it's a real deployed site — not a local file or mockup
 - Investor score + Q&A: highlight a rebuttal/defense round — show the investor didn't just accept a vague answer
 - Pitch deck: open/download the generated deck, flip through a couple slides (market sizing, financials, landing page screenshot slide)
 
@@ -48,4 +48,3 @@ This has happened repeatedly during development (documented in `docs/architectur
 - Free-tier Groq quota (200k tokens/day) limits repeated full runs — team distributes API keys across separate accounts to mitigate
 - `investor_score` is LLM-judged, not a deterministic rubric — reasonable proxy, not a precise metric
 - Local Ollama fallback for persona generation isn't always available depending on machine setup — Groq fallback handles this transparently
-- Landing pages are generated and saved locally (`data/landing_pages/`), not deployed to a live public URL — frontend's "View Landing Page" link is currently non-functional since `/generate` doesn't return a landing_page_url
