@@ -56,13 +56,32 @@
   (cfo needs cmo's market sizing as input; cto routed through cmo too for LangGraph
   fan-in scheduling symmetry — see CFO-agent section above and graph.py comments)
 
-  ## Pitch-deck builder (Sakshi) — NOT YET BUILT
-- python-pptx dependency present but unused. Status: pending, timeline TBD.
+## Pitch-deck builder (Sakshi) — backend/tools/deck_builder.py
+- Status: done. Auto-populates a 6-7 slide pptx from CEO/CMO/CFO/CTO output:
+  title, pitch narrative (sentence-bullets), market opportunity, competitive landscape,
+  product/tech stack, landing page screenshot (via Playwright headless render), financials.
+- Visual polish: consistent accent color scheme, bold titles, typography sizing.
+- Wired into backend/main.py's /generate endpoint — builds + serves the real deck via
+  a static file mount (/decks/<file>.pptx) after each pipeline run.
+
+## Frontend (Sakshi) — frontend/ (React + Vite)
+- IdeaForm, LiveLog (SSE-based progress streaming), ResultsDisplay, InvestorScore
+  (color-coded confidence bar) components.
+- Wired to real backend: POST /generate runs the full pipeline; GET /generate/stream
+  gives coarse-grained progress markers (time-based, not true per-node streaming —
+  documented limitation, would need LangGraph's astream to fix properly).
+- Perf: IdeaForm and ResultsDisplay memoized to avoid unnecessary re-renders during
+  LiveLog's streaming updates.
+- Dark theme styling throughout.
 
 ## backend/api/ (Lakshit)
 - Streaming layer / backend for 3D demo UI. Added outside original scope to unblock
   demo work. Now formally assigned to Lakshit's row.
 
 ## Deployment status
-- Currently local-only: HTML saved to data/landing_pages/, not hosted.
-- Real Vercel/Netlify deploy needed for demo — in progress (Lakshit).
+- Currently local-only: HTML saved to data/landing_pages/, not hosted on a public URL.
+- Frontend's "View Landing Page" link is non-functional as a result — /generate doesn't
+  return a landing_page_url. Documented as a known limitation in demo_script.md rather
+  than a live claim.
+- No Vercel/Netlify integration exists in code as of Wk10 — deploy.py's docstring notes
+  it as a future swap-in, not in progress.
