@@ -38,6 +38,7 @@ async def generate(req: IdeaRequest):
         "cmo_output": result.get("cmo_output"),
         "cfo_output": result.get("cfo_output"),
         "cto_output": result.get("cto_output"),
+	"landing_page_url": (result.get("cto_output") or {}).get("landing_page_url"),
     }
 
     deck_filename = f"deck_{abs(hash(req.idea)) % 10**8}.pptx"
@@ -56,6 +57,7 @@ async def generate(req: IdeaRequest):
         "cmo_output": result.get("cmo_output"),
         "cfo_output": result.get("cfo_output"),
         "cto_output": result.get("cto_output"),
+	"landing_page_url": (result.get("cto_output") or {}).get("landing_page_url"),
         "investor_transcript": result.get("investor_transcript"),
         "investor_score": result.get("investor_score"),
         "deck_url": deck_url,
