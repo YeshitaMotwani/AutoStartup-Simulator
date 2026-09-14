@@ -42,6 +42,7 @@ class CTOOutput(BaseModel):
     landing_page_path: Optional[str] = None
     landing_page_validation: LandingPageValidation
     code_repo: Optional[str] = None
+    landing_page_url: Optional[str] = None
 
 
 class CostProjection(BaseModel):

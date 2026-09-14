@@ -11,6 +11,9 @@ from backend.orchestration.state import AgentState
 from backend.tools.idea_classifier import classify_idea
 from backend.tools.codegen import generate_landing_page
 from backend.tools.deploy import save_landing_page
+from backend.tools.deploy import deploy_to_netlify
+
+
 
 logger = get_logger(__name__)
 
@@ -99,6 +102,9 @@ class CTOAgent:
         architecture_summary = self.summarize_architecture(idea, tech_stack, mvp_features)
         landing_page_html, validation = generate_landing_page(idea, mvp_features, tech_stack)
         landing_page_path = save_landing_page(idea, landing_page_html)
+        deploy_result = deploy_to_netlify(idea, landing_page_html)
+        landing_page_url = deploy_result.get("url")
+
 
         return {
             "category": category,
@@ -107,10 +113,10 @@ class CTOAgent:
             "architecture_summary": architecture_summary or "Architecture summary generation failed — check GROQ_API_KEY.",
             "landing_page_html": landing_page_html,
             "landing_page_path": landing_page_path,
+            "landing_page_url": landing_page_url,
             "landing_page_validation": validation,
             "code_repo": None,
         }
-
 
 def cto_node(state: AgentState) -> dict:
     """LangGraph node — replaces graph.py's cto_stub with the real CTO-agent."""
@@ -118,3 +124,5 @@ def cto_node(state: AgentState) -> dict:
     agent = CTOAgent()
     output = agent.run(idea)
     return {"cto_output": output}
+
+
