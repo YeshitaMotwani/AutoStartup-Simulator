@@ -30,7 +30,7 @@ Point out the LiveLog component streaming each agent's progress:
 - Investor agent fires real questions and pushes back with rebuttals
 
 **4. Show the results (60-90 sec)**
-- Landing page: click the live Netlify URL from the results view, show it's a real deployed site — not a local file or mockup
+
 - Investor score + Q&A: highlight a rebuttal/defense round — show the investor didn't just accept a vague answer
 - Pitch deck: open/download the generated deck, flip through a couple slides (market sizing, financials, landing page screenshot slide)
 

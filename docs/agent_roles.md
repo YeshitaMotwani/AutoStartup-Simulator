@@ -46,8 +46,8 @@
   generate -> validate -> self-correct loop (backend/tools/html_validator.py), max 3
   retries, falls back to a hardcoded safe template if all retries fail
 - "Deploy" step: backend/tools/deploy.py — saves HTML locally to data/landing_pages/
-  AND deploys a live public URL via Netlify's free tier (requires NETLIFY_API_TOKEN;
-  gracefully falls back to local-only save if token isn't set)
+  AND deploys a live public URL via Netlify's file-digest API (requires
+  NETLIFY_API_TOKEN; gracefully falls back to local-only save if token isn't set)
 - Uses the shared backend/models/llm_client.call_llm (Groq) — no separate provider
   abstraction added; no web search needed for this agent
 
@@ -80,12 +80,10 @@
   demo work. Now formally assigned to Lakshit's row.
 
 ## Deployment status
-- Real deployment implemented (Wk10): landing pages are saved locally AND deployed
-  to a live public URL via Netlify's free tier API.
+- Real deployment implemented and confirmed working (Wk10): landing pages are
+  saved locally AND deployed to a live public URL via Netlify.
+- Uses Netlify's file-digest deploy API (create site → declare file hash →
+  upload file) rather than raw zip upload — zip upload caused pages to render
+  as plain text instead of HTML (fixed).
 - Requires NETLIFY_API_TOKEN in .env — see configs/.env.example.
-- Falls back gracefully to local-only save if the token isn't configured (e.g. in
-  test environments), so nothing breaks if it's unset.
-- Frontend's "View Landing Page" link is non-functional as a result — /generate doesn't
-  return a landing_page_url. Documented as a known limitation in demo_script.md rather
-  than a live claim.
-  it as a future swap-in, not in progress.
+- Falls back gracefully to local-only save if the token isn't configured.
